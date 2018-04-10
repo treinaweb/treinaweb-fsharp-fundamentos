@@ -13,11 +13,20 @@ let getOldestPerson people =
 let getYoungerPerson people =
     people |> List.minBy(fun p -> p.age)
 
+// Currying implícito
 let getPageableContent people pageNumber = 
     people |> List.sortBy(fun p -> p.name)
            |> List.skip((pageNumber - 1) * 3)
         //    |> List.take(3)
            |> List.truncate(3)
+
+// Currying explícito
+// let getPageableContent people = 
+//     let applyPage page = 
+//         people |> List.sortBy(fun p -> p.name)
+//                |> List.skip((page - 1) * 3)
+//                |> List.truncate(3)
+//     applyPage
 
 [<EntryPoint>]
 let main argv =
@@ -63,7 +72,10 @@ let main argv =
         printf "Digite a página desejada: "
         pageNumber <- int(Console.ReadLine())
         if pageNumber <> 0 then
+            // Currying implícito
             getPageableContent names pageNumber |> List.iter(fun p -> printf " - %s, %d anos \n" p.name p.age)
+            // Currying explícito
+            // ((getPageableContent names) pageNumber) |> List.iter(fun p -> printf " - %s, %d anos \n" p.name p.age)
             printf "==============================\n"
     // names |> List.iter(fun n -> printf " - %s \n" n)
     0 // return an integer exit code
