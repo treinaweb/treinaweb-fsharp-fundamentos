@@ -14,7 +14,12 @@ let getYoungerPerson people =
     people |> List.minBy(fun p -> p.age)
 
 // Currying implícito
-let getPageableContent people pageNumber = 
+let getPageableContent (people: Person list) pageNumber = 
+    let mutable maxNumberOfPages = people.Length / 3
+    if people.Length % 3 > 0 then
+        maxNumberOfPages <- maxNumberOfPages + 1
+    if pageNumber > maxNumberOfPages then
+        failwith "Página inválida"
     people |> List.sortBy(fun p -> p.name)
            |> List.skip((pageNumber - 1) * 3)
         //    |> List.take(3)
@@ -73,7 +78,10 @@ let main argv =
         pageNumber <- int(Console.ReadLine())
         if pageNumber <> 0 then
             // Currying implícito
-            getPageableContent names pageNumber |> List.iter(fun p -> printf " - %s, %d anos \n" p.name p.age)
+            try
+                getPageableContent names pageNumber |> List.iter(fun p -> printf " - %s, %d anos \n" p.name p.age)
+            with 
+                | Failure message -> printf "Houve um erro ao aplicar a paginação: %s \n" message
             // Currying explícito
             // ((getPageableContent names) pageNumber) |> List.iter(fun p -> printf " - %s, %d anos \n" p.name p.age)
             printf "==============================\n"
