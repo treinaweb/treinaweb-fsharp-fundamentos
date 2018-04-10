@@ -28,5 +28,11 @@ let main argv =
     names |> List.map(fun n -> "Olá, " + n.name)
           |> List.iter(fun welcome -> printf "%s \n" welcome)
     printf "==============================\n"
+    printf "Digite o termo de busca por nome: "
+    let searchArg = Console.ReadLine()
+    let searchResult = names |> List.where(fun person -> person.name.Contains(searchArg))
+    printf "\nRESULTADOS\n"
+    searchResult |> List.iter(fun person -> printf " - %s, %d anos \n" person.name person.age)
+
     // names |> List.iter(fun n -> printf " - %s \n" n)
     0 // return an integer exit code
