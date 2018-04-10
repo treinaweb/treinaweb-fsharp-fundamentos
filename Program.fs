@@ -23,16 +23,26 @@ let main argv =
     ]
     printf "Você tem %d amigos! \n" names.Length
     printf "==============================\n"
+
     // printf "Nomes dos amigos digitados: \n"
     // names |> List.iter(fun n -> printf " - %s \n" n)
     names |> List.map(fun n -> "Olá, " + n.name)
           |> List.iter(fun welcome -> printf "%s \n" welcome)
     printf "==============================\n"
+
     printf "Digite o termo de busca por nome: "
     let searchArg = Console.ReadLine()
-    let searchResult = names |> List.where(fun person -> person.name.Contains(searchArg))
     printf "\nRESULTADOS\n"
-    searchResult |> List.iter(fun person -> printf " - %s, %d anos \n" person.name person.age)
+    names |> List.where(fun person -> person.name.Contains(searchArg))   
+          |> List.map(fun person -> { name = person.name.ToUpper(); age = person.age }) 
+          |> List.iter(fun person -> printf " - %s, %d anos \n" person.name person.age)
+    printf "==============================\n"
 
+    printf "Sumário: \n"
+    let oldestPerson = names |> List.maxBy(fun person -> person.age)
+    printf " - Seu amigo mais velho é o %s, com %d anos \n" oldestPerson.name oldestPerson.age
+    let youngerPerson = names |> List.minBy(fun person -> person.age)
+    printf " - Seu amigo mais novo é o %s, com %d anos \n" youngerPerson.name youngerPerson.age
+    printf " - A média de idade dos seus amigos é %d anos\n" ((names |> List.sumBy(fun person -> person.age)) / names.Length)
     // names |> List.iter(fun n -> printf " - %s \n" n)
     0 // return an integer exit code
