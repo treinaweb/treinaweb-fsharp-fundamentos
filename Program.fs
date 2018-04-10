@@ -14,6 +14,10 @@ let main argv =
     ]
     printf "Você tem %d amigos! \n" names.Length
     printf "==============================\n"
-    printf "Nomes dos amigos digitados: \n"
+    // printf "Nomes dos amigos digitados: \n"
+    // names |> List.iter(fun n -> printf " - %s \n" n)
+    names |> List.map(fun n -> "Olá, " + n)
+          |> List.iter(fun welcome -> printf "%s \n" welcome)
+    printf "==============================\n"
     names |> List.iter(fun n -> printf " - %s \n" n)
     0 // return an integer exit code
