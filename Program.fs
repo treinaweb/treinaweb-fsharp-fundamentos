@@ -6,7 +6,7 @@ open System
 let main argv =
     printfn "Hello World from F#!"
     printfn "Digite seu nome: "
-    let mutable nome = Console.ReadLine()
+    let mutable nome: string = Console.ReadLine()
     printf "Seu nome é %s\n" nome
     nome <- nome + "Mudei o valor"
     printf "Seu nome é %s\n" nome
