@@ -7,6 +7,12 @@ type Person = {
     age: int
 }
 
+let getOldestPerson people =
+    people |> List.maxBy(fun p -> p.age)
+
+let getYoungerPerson people =
+    people |> List.minBy(fun p -> p.age)
+
 [<EntryPoint>]
 let main argv =
     let mutable name = ""
@@ -39,9 +45,9 @@ let main argv =
     printf "==============================\n"
 
     printf "Sumário: \n"
-    let oldestPerson = names |> List.maxBy(fun person -> person.age)
+    let oldestPerson = names |> getOldestPerson
     printf " - Seu amigo mais velho é o %s, com %d anos \n" oldestPerson.name oldestPerson.age
-    let youngerPerson = names |> List.minBy(fun person -> person.age)
+    let youngerPerson = names |> getYoungerPerson
     printf " - Seu amigo mais novo é o %s, com %d anos \n" youngerPerson.name youngerPerson.age
     printf " - A média de idade dos seus amigos é %d anos\n" ((names |> List.sumBy(fun person -> person.age)) / names.Length)
     // names |> List.iter(fun n -> printf " - %s \n" n)
